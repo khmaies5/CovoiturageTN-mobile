@@ -61,11 +61,11 @@ import com.cyberdev.covoituragetn.AnnoncesView;
  * of building native mobile applications using Java.
  */
 public class CovoiturageTN {
-    private static final String HTML_API_KEY = "AIzaSyA1QNU9aG7GL7Kg8b6strSze0OBq3XTIbc";
+    private static final String HTML_API_KEY = "AIzaSyCTbLzGGtFx0vn093oLmljzIxHoZ9MjuaE";
     private Form current;
     private Resources theme;
 
-    private Form home;
+    public static Form home;
     ArrayList<Annonce> annonces = new ArrayList<Annonce>();
 
     public void init(Object context) {
@@ -98,219 +98,19 @@ public class CovoiturageTN {
 
 
    
-/*
- ArrayList<Map<String, Object>> data = dat();
-  
-
-  DefaultListModel<Map<String, Object>> model = new DefaultListModel<>(data);
-
-  MultiList ml = new MultiList(model);
-*/
-  
-       /* 
-        home.addComponent(new Label("This is a Label"));
-        home.addComponent(new Button("This is a Button"));
-        TextField txt = new TextField();
-        txt.setHint("This is a TextField");
-        home.addComponent(txt);
-        home.addComponent(new CheckBox("This is a CheckBox"));
-        RadioButton rb1 = new RadioButton("This is a Radio Button 1");
-        rb1.setGroup("group");
-        home.addComponent(rb1);
-        RadioButton rb2 = new RadioButton("This is a Radio Button 2");
-        rb2.setGroup("group");
-        home.addComponent(rb2);
-        final Slider s = new Slider();
-        s.setText("50%");
-        s.setProgress(50);
-        s.setEditable(true);
-        s.setRenderPercentageOnTop(true);
-        home.addComponent(s);
-        
-        Button b1 = new Button("Show a Dialog");
-        b1.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                Dialog.show("Dialog Title", "Dialog Body", "Ok", "Cancel");
-            }
-        });
-        home.addComponent(b1);
-        */
-        //Create Form1 and Form2 and set a Back Command to navigate back to the home Form        
-        Form form1 = new Form("Form1");
-        form1.setLayout(new BorderLayout());
-        final MapContainer cnt = new MapContainer(HTML_API_KEY);
-              //  cnt.setCameraPosition(new Coord(35.1031234, 9.64848));
-                //cnt.setShowMyLocation(true);
-                //cnt.zoom(new Coord(35.1031234, 9.64848), 6);
-        Button btnMoveCamera = new Button("Move Camera");
-        
-        btnMoveCamera.addActionListener(e->{
-            cnt.setCameraPosition(new Coord(-33.867, 151.206));
-        });
-        Style st = new Style();
-        st.setFgColor(0xff0000);
-        st.setBgTransparency(0);
-        FontImage markerImg = FontImage.createMaterial(FontImage.MATERIAL_PLACE, st, Display.getInstance().convertToPixels(3));
-
-        Button btnAddMarker = new Button("Add Marker");
-        btnAddMarker.addActionListener(e->{
-
-            cnt.setCameraPosition(new Coord(41.889, -87.622));
-            cnt.addMarker(
-                    EncodedImage.createFromImage(markerImg, false),
-                    cnt.getCameraPosition(),
-                    "Hi marker",
-                    "Optional long description",
-                     evt -> {
-                             ToastBar.showMessage("You clicked the marker", FontImage.MATERIAL_PLACE);
-                     }
-            );
-
-        });
-        
-         final DefaultListModel<String> options = new DefaultListModel<>();
-
-        AutoCompleteTextField from = new AutoCompleteTextField(options) {
-
-            @Override
-
-            protected boolean filter(String text) {
-
-                if(text.length() == 0) {
-
-                    return false;
-
-                }
-
-                String[] l = searchLocations(text);
-
-                if(l == null || l.length == 0) {
-
-                    return false;
-
-                }
-
-
-
-                options.removeAll();
-
-                for(String s : l) {
-
-                    options.addItem(s);
-
-                }
-
-                return true;
-
-            }
-
-
-
-        };
-                AutoCompleteTextField to = new AutoCompleteTextField(options) {
-
-            @Override
-
-            protected boolean filter(String text) {
-
-                if(text.length() == 0) {
-
-                    return false;
-
-                }
-
-                String[] l = searchLocations(text);
-
-                if(l == null || l.length == 0) {
-
-                    return false;
-
-                }
-
-
-
-                options.removeAll();
-
-                for(String s : l) {
-
-                    options.addItem(s);
-
-                }
-
-                return true;
-
-            }
-
-
-
-        };
-
-        from.setMinimumElementsShownInPopup(5);
-to.setMinimumElementsShownInPopup(5);
-        Button btnAddPath = new Button("Add Path");
-        btnAddPath.addActionListener(e->{
-
-           String src = from.getText();
-
-        String dest = to.getText();
-
-        // get the routes using google directions api
-
-        String encoded = getRoutesEncoded(src, dest);
-        // decode the routes in an arry of coords
-
-        Coord[] coords = decode(encoded);
-
-            System.out.println("cords "+coords);
-
-        cnt.addPath(coords);
-                       //cnt.setCameraPosition(coords);
-
-        });
-
-        Button btnClearAll = new Button("Clear All");
-        btnClearAll.addActionListener(e->{
-            cnt.clearMapLayers();
-        });
-
-        cnt.addTapListener(e->{
-            TextField enterName = new TextField();
-            Container wrapper = BoxLayout.encloseY(new Label("Name:"), enterName);
-            InteractionDialog dlg = new InteractionDialog("Add Marker");
-            dlg.getContentPane().add(wrapper);
-            enterName.setDoneListener(e2->{
-                String txt2 = enterName.getText();
-                cnt.addMarker(
-                        EncodedImage.createFromImage(markerImg, false),
-                        cnt.getCoordAtPosition(e.getX(), e.getY()),
-                        enterName.getText(),
-                        "",
-                        e3->{
-                                ToastBar.showMessage("You clicked "+txt2, FontImage.MATERIAL_PLACE);
-                        }
-                );
-                dlg.dispose();
-            });
-            dlg.showPopupDialog(new Rectangle(e.getX(), e.getY(), 10, 10));
-            enterName.startEditingAsync();
-        });
-
-        Container root = LayeredLayout.encloseIn(
-                BorderLayout.center(cnt),
-                BorderLayout.south(
-                        FlowLayout.encloseCenter(from, to, btnAddPath, btnClearAll)
-                )
-        );
-
-        form1.add(BorderLayout.CENTER, root);
-       // form1.show();
-
+         
+        Form form1 = new LogIn();
+       
 
         setBackCommand(form1);
-        Form form2 = new AnnoncesView();
+        Form form2 = new AjouterAnnonce();
         setBackCommand(form2);
+       
+
+                            
+
+
+
 
         //Add navigation commands to the home Form
         NavigationCommand homeCommand = new NavigationCommand("Home");
@@ -323,92 +123,48 @@ to.setMinimumElementsShownInPopup(5);
 
         NavigationCommand cmd2 = new NavigationCommand("Form2");
         cmd2.setNextForm(form2);
-        home.getToolbar().addCommandToSideMenu(cmd2);
+                home.getToolbar().addCommandToSideMenu(cmd2);
 
-        //Add Edit, Add and Delete Commands to the home Form context Menu
-        Image im = FontImage.createMaterial(FontImage.MATERIAL_MODE_EDIT, UIManager.getInstance().getComponentStyle("Command"));
-        Command edit = new Command("Edit", im) {
+        
+        if(LogIn.isLoggedIn()){
+            System.out.println("loggedin");
+             Form profile = new Form("profile");
+                                                setBackCommand(profile);
+            NavigationCommand profileCommand = new NavigationCommand("Profile");
+        profileCommand.setNextForm(profile);
+        home.getToolbar().addCommandToSideMenu(profileCommand);
+            
+        } else {
+                        System.out.println("not loggedin");
 
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                System.out.println("Editing");
-            }
-        };
-        home.getToolbar().addCommandToOverflowMenu(edit);
+Form login = new LogIn();
+                                                    setBackCommand(login);
+            NavigationCommand loginCommand = new NavigationCommand("LogIn");
+        loginCommand.setNextForm(login);
+        home.getToolbar().addCommandToSideMenu(loginCommand);
+        }
 
-        im = FontImage.createMaterial(FontImage.MATERIAL_LIBRARY_ADD, UIManager.getInstance().getComponentStyle("Command"));
-        Command add = new Command("Add", im) {
-
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                System.out.println("Adding");
-            }
-        };
-        home.getToolbar().addCommandToOverflowMenu(add);
-
-        im = FontImage.createMaterial(FontImage.MATERIAL_DELETE, UIManager.getInstance().getComponentStyle("Command"));
-        Command delete = new Command("Delete", im) {
-
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                System.out.println("Deleting");
-            }
-
-        };
-        home.getToolbar().addCommandToOverflowMenu(delete);
+        
 
         home.show();
     }
     
     
     
-    String[] searchLocations(String text) {        
-
-        try {
-
-            if(text.length() > 0) {
-
-                ConnectionRequest r = new ConnectionRequest();
-
-                r.setPost(false);
-
-                r.setUrl("https://maps.googleapis.com/maps/api/place/autocomplete/json");
-
-                r.addArgument("key", HTML_API_KEY);
-
-                r.addArgument("input", text);
-
-                NetworkManager.getInstance().addToQueueAndWait(r);
-
-                Map<String,Object> result = new JSONParser().parseJSON(new InputStreamReader(new ByteArrayInputStream(r.getResponseData()), "UTF-8"));
-                
-
-                String[] res = Result.fromContent(result).getAsStringArray("//description");
-                return res;
-
-            }
-
-        } catch(Exception err) {
-
-            Log.e(err);
-
-        }
-
-        return null;
-
-    }
-
+ 
     protected void setBackCommand(Form f) {
         Command back = new Command("") {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
-                home.showBack();
+                start();
+                //home.showBack();
             }
 
         };
         Image img = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, UIManager.getInstance().getComponentStyle("TitleCommand"));
         back.setIcon(img);
+        
         f.getToolbar().addCommandToLeftBar(back);
         f.getToolbar().setTitleCentered(true);
         f.setBackCommand(back);
@@ -421,315 +177,5 @@ to.setMinimumElementsShownInPopup(5);
     public void destroy() {
     }
     
-     // src: https://github.com/googlemaps/android-maps-utils/blob/master/library/src/com/google/maps/android/PolyUtil.java
-
-    public static Coord[] decode(final String encodedPath) {
-
-        int len = encodedPath.length();
-
-        final ArrayList<Coord> path = new ArrayList<Coord>();
-
-        int index = 0;
-
-        int lat = 0;
-
-        int lng = 0;
-
-
-
-        while (index < len) {
-
-            int result = 1;
-
-            int shift = 0;
-
-            int b;
-
-            do {
-
-                b = encodedPath.charAt(index++) - 63 - 1;
-
-                result += b << shift;
-
-                shift += 5;
-
-            } while (b >= 0x1f);
-
-            lat += (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
-
-
-
-            result = 1;
-
-            shift = 0;
-
-            do {
-
-                b = encodedPath.charAt(index++) - 63 - 1;
-
-                result += b << shift;
-
-                shift += 5;
-
-            } while (b >= 0x1f);
-
-            lng += (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
-
-
-
-            path.add(new Coord(lat * 1e-5, lng * 1e-5));
-
-        }
-
-        Coord[] p = new Coord[path.size()];
-
-        for (int i = 0; i < path.size(); i++) {
-
-            p[i] = path.get(i);
-
-        }
-
-
-
-        return p;
-
-    }
-
-
-    public void showSingleAnnonce(Annonce ann){
-        Form form3 = new Form("Annonce Details");
-       // form3.setLayout(new BorderLayout());
-        Label from = new Label("");
-        setBackCommand(form3);
-        from.setText(ann.getLieuDepart());
-        form3.add(from);
-        
-        Container mapContainer = new Container();
-        mapContainer.setHeight(100);
-        mapContainer.setShouldCalcPreferredSize(true);
-        final MapContainer cnt = new MapContainer(HTML_API_KEY);
-        mapContainer.add(cnt);
-         String encoded = getRoutesEncoded(ann.getLieuDepart(), ann.getLieuArriver());
-        // decode the routes in an arry of coords
-
-        Coord[] coords = decode(encoded);
-        cnt.zoom(coords[0], 5);
-        
-
-            System.out.println("cords "+coords);
-
-        cnt.addPath(coords);
-        form3.add(mapContainer);
-        form3.show();
-    }
-    
-    
-    private Container createAnnonceContainer(Annonce ann) {
-        Form form3 = new Form("Annonce Details");
-        setBackCommand(form3);
-    Button trip = new Button("", "Label");
-    trip.addActionListener(e -> form3.show());
-    Label email = new Label("");
-    Label pic = new Label("");
-    Container cnt = new Container(new BoxLayout(BoxLayout.Y_AXIS));
-    trip.getAllStyles().setBgTransparency(0);
-    trip.getAllStyles().setFont(Font.createSystemFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_MEDIUM));
-    email.getAllStyles().setBgTransparency(0);
-    cnt.add(trip);
-    cnt.add(email);
-    trip.setText(ann.getLieuDepart());
-    email.setText(ann.getTripDate().toString());
-    int mm = Display.getInstance().convertToPixels(3);
-      EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(mm * 3, mm * 4, 0), false);
-
-    Image userImg = URLImage.createToStorage(placeholder, "userImg", "http://localhost/covoituragetn/"+ann.getUserImg());
-    pic.setIcon(userImg);
-    Container b = BorderLayout.center(cnt).
-        add(BorderLayout.WEST, pic);
-    b.setLeadComponent(trip);
-    return b;
-}
-    
-    
-   //test
-    int pageNumber = 1;
-java.util.List<Map<String, Object>> fetchPropertyData() {
-          SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-    try {
-        ConnectionRequest r = new ConnectionRequest();
-        r.setPost(false);
-        r.setUrl("http://localhost/covoituragetn-api/selectPaginator.php");
-        
-        r.addArgument("page", "" +pageNumber);
-        pageNumber++;
-        System.out.println("page num "+pageNumber);
-        NetworkManager.getInstance().addToQueueAndWait(r);
-        Map<String,Object> response = new JSONParser().parseJSON(new InputStreamReader(new ByteArrayInputStream(r.getResponseData()), "UTF-8"));
-            
-           try {
-            for (int i = 0; i < ((ArrayList) response.get("annonce")).size(); i++) {
-           Map<String,Object> ann = (Map<String,Object>) ((ArrayList) response.get("annonce")).get(i);
-            annonces.add(new Annonce(Integer.parseInt(ann.get("id_annonce").toString()),formatter.parse(ann.get("trip_date").toString()),formatter.parse(ann.get("annonce_date").toString()),ann.get("lieu_depart").toString(),ann.get("lieu_arrive").toString(),Integer.parseInt(ann.get("nbr_personne").toString()),Float.parseFloat(ann.get("prix").toString()),ann.get("critere").toString(),ann.get("distance").toString(),new User(Integer.parseInt(ann.get("id_user").toString())),ann.get("photo_profil").toString()));
-            
-
-  
-      }
-                    
-           } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return (java.util.List<Map<String, Object>>)response.get("annonce");
-    } catch(Exception err) {
-        //System.out.println("cuase "+err.getMessage());
-        Log.e(err);
-        return null;
-    }
-}
-    
-   //int pageNumber = 1; 
-public void getAnnonces()
-{
- 
-      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-  try{
-            ConnectionRequest request = new ConnectionRequest("http://localhost/covoituragetn-api/selectPaginator.php", false);
-            request.addArgument("page", "" + pageNumber);
-        pageNumber++;
-            NetworkManager.getInstance().addToQueueAndWait(request);
-
-            Map<String, Object> response = new JSONParser().parseJSON(new InputStreamReader(new ByteArrayInputStream(request.getResponseData()), "UTF-8"));
-            System.out.println("test "+response);
-            for(Object t : ((ArrayList) response.get("annonce"))){
-            System.out.println("response "+t.toString());
-            
-            }
-             try {
-            for (int i = 0; i < ((ArrayList) response.get("annonce")).size(); i++) {
-           Map<String,Object> ann = (Map<String,Object>) ((ArrayList) response.get("annonce")).get(i);
-            annonces.add(new Annonce(Integer.parseInt(ann.get("id_annonce").toString()),formatter.parse(ann.get("trip_date").toString()),formatter.parse(ann.get("annonce_date").toString()),ann.get("lieu_depart").toString(),ann.get("lieu_arrive").toString(),Integer.parseInt(ann.get("nbr_personne").toString()),Float.parseFloat(ann.get("prix").toString()),ann.get("critere").toString(),ann.get("distance").toString(),new User(Integer.parseInt(ann.get("id_user").toString())),ann.get("photo_profil").toString()));
-            
-
-  
-      }
-                    
-           } catch (ParseException e) {
-            e.printStackTrace();
-        }
-            
-               
-               
-               
-               
-
-           /* */
-  }catch(IOException e) {
-
-            e.printStackTrace();
-  }
-
- 
-  
-
-
-
-  
-  
-                   
-
-
-}
-    public static String getRoutesEncoded(String src, String dest) {
-        
-     
-        String ret = "";
-
-        try {
-
-            ConnectionRequest request = new ConnectionRequest("https://maps.googleapis.com/maps/api/directions/json", false);
-
-            request.addArgument("key", HTML_API_KEY);
-
-            request.addArgument("origin", src);
-
-            request.addArgument("destination", dest);
-
-
-
-            NetworkManager.getInstance().addToQueueAndWait(request);
-
-            Map<String, Object> response = new JSONParser().parseJSON(new InputStreamReader(new ByteArrayInputStream(request.getResponseData()), "UTF-8"));
-//            System.out.println("response "+response);
-            if (response.get("routes") != null) {
-
-                ArrayList routes = (ArrayList) response.get("routes");
-
-                if (routes.size() > 0)
-
-                    ret = ((LinkedHashMap) ((LinkedHashMap) ((ArrayList) response.get("routes")).get(0)).get("overview_polyline")).get("points").toString();
-                
-                    System.out.println("distance "+((LinkedHashMap) ((LinkedHashMap)((ArrayList) ((LinkedHashMap)((ArrayList) response.get("routes")).get(0)).get("legs")).get(0)).get("distance")).get("text").toString());
-                                       
-   
-                  //  String d = ((LinkedHashMap) ((LinkedHashMap) ((ArrayList) response.get("routes")).get(0)).get("distance")).get("text").toString();
-            }
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
-        }
-
-        return ret;
-
-    }
-
-    
-
-        public static void getRoutesEncodedAsync(Coord src, Coord dest, Callback callback) {
-
-        ConnectionRequest request = new ConnectionRequest("https://maps.googleapis.com/maps/api/directions/json", false) {
-
-            @Override
-
-            protected void readResponse(InputStream input) throws IOException {
-
-                String ret = "";
-
-                Map<String, Object> response = new JSONParser().parseJSON(new InputStreamReader(input, "UTF-8"));
-
-                if (response.get("routes") != null) {
-
-                    ArrayList routes = (ArrayList) response.get("routes");
-
-                    if (routes.size() > 0)
-
-                        ret = ((LinkedHashMap) ((LinkedHashMap) ((ArrayList) response.get("routes")).get(0)).get("overview_polyline")).get("points").toString();
-
-                }
-
-                callback.onSucess(ret);
-
-            }
-
-
-
-
-
-        };
-
-        request.addArgument("key", HTML_API_KEY);
-
-        request.addArgument("origin", src.getLatitude() + "," + src.getLongitude());
-
-        request.addArgument("destination", dest.getLatitude() + "," + dest.getLongitude());
-
-
-
-        NetworkManager.getInstance().addToQueue(request);
-
-    }
 
 }

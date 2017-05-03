@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<component type="Form" layout="BorderLayout" borderLayoutAbsoluteCenter="false"  title="AnnoncesView" name="AnnoncesView">
+<component type="Form" layout="BorderLayout" borderLayoutAbsoluteCenter="false"  title="Annonces View" uiid="AnnoncesForm" name="AnnoncesView">
 </component>

@@ -5,7 +5,9 @@
  */
 package com.cyberdev.covoituragetn;
 
+import com.codename1.components.FloatingActionButton;
 import com.codename1.components.MultiButton;
+import com.codename1.components.ToastBar;
 import com.codename1.googlemaps.MapContainer;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
@@ -14,25 +16,29 @@ import com.codename1.io.NetworkManager;
 import com.codename1.l10n.ParseException;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.maps.Coord;
+import com.codename1.ui.Command;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
+import com.codename1.ui.Image;
 import com.codename1.ui.InfiniteContainer;
 import com.codename1.ui.Label;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.plaf.UIManager;
-import static com.cyberdev.covoituragetn.CovoiturageTN.decode;
-import static com.cyberdev.covoituragetn.CovoiturageTN.getRoutesEncoded;
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Map;
+import org.littlemonkey.connectivity.Connectivity;
 
 /**
  * GUI builder created Form
@@ -41,9 +47,9 @@ import java.util.Map;
  */
 public class AnnoncesView extends com.codename1.ui.Form {
 
-        private static final String HTML_API_KEY = "AIzaSyA1QNU9aG7GL7Kg8b6strSze0OBq3XTIbc";
+        private static final String HTML_API_KEY = "AIzaSyCTbLzGGtFx0vn093oLmljzIxHoZ9MjuaE";
    public ArrayList<Annonce> annonces = new ArrayList<Annonce>();
-    Style s = UIManager.getInstance().getComponentStyle("MultiLine1");
+    Style s = UIManager.getInstance().getComponentStyle("M");
     FontImage p = FontImage.createMaterial(FontImage.MATERIAL_PORTRAIT, s);
     EncodedImage placeholder = EncodedImage.createFromImage(p.scaled(p.getWidth() * 3, p.getHeight() * 3), false);
 
@@ -55,14 +61,50 @@ public class AnnoncesView extends com.codename1.ui.Form {
     
     public AnnoncesView(com.codename1.ui.util.Resources resourceObjectInstance) {
         initGuiBuilderComponents(resourceObjectInstance);
+         if (Connectivity.isConnected()) {
+        FloatingActionButton nextForm = FloatingActionButton.createFAB(FontImage.MATERIAL_ADD);
+        nextForm.addActionListener(e->{
+            if(LogIn.isLoggedIn()){
+            Form ajouter = new AjouterAnnonce();
+            setBackCommand(ajouter);
+            ajouter.show();
+            } else {
+                Form logIn = new LogIn();
+                setBackCommand(logIn);
+                logIn.show();
+            }
+
+        });
         
-this.add(BorderLayout.CENTER,list);
+         Container root = LayeredLayout.encloseIn(
+
+                BorderLayout.center(nextForm.bindFabToContainer(list))
+
+               
+
+        );
+        
+this.add(BorderLayout.CENTER,root);
+         } else Dialog.show("Connection Error", "please check your connection and try again", "ok", null);
+//this.add(BorderLayout.SOUTH,nextForm);
     }
     
-      public void showSingleAnnonce(Annonce ann){
-          
+    
+
+    
+      public void showSingleAnnonce(String id){
+          Annonce ann = new Annonce();
+          int idAnn = Integer.parseInt(id);
+          for (int i = 0; i < annonces.size(); i++) {
+              Annonce get = annonces.get(i);
+              if (get.getIdAnnonce() == idAnn){
+                  ann = get;
+              }
+              
+          }
           
         Form form3 = new SingleAnnonceView(ann);
+          setBackCommand(form3);
        // form3.setLayout(new BorderLayout());
        
        // setBackCommand(this);
@@ -80,18 +122,17 @@ this.add(BorderLayout.CENTER,list);
         int pageNumber = 1;
 java.util.List<Map<String, Object>> fetchPropertyData() {
           SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
     try {
         ConnectionRequest r = new ConnectionRequest();
         r.setPost(false);
-        r.setUrl("http://localhost/covoituragetn-api/selectPaginator.php");
+        r.setUrl("http://localhost/CovoiturageTN-API/selectPaginator.php");
         
         r.addArgument("page", "" +pageNumber);
         pageNumber++;
         System.out.println("page num "+pageNumber);
         NetworkManager.getInstance().addToQueueAndWait(r);
         Map<String,Object> response = new JSONParser().parseJSON(new InputStreamReader(new ByteArrayInputStream(r.getResponseData()), "UTF-8"));
-            
+            System.out.println("response "+response);
            try {
             for (int i = 0; i < ((ArrayList) response.get("annonce")).size(); i++) {
            Map<String,Object> ann = (Map<String,Object>) ((ArrayList) response.get("annonce")).get(i);
@@ -102,13 +143,15 @@ java.util.List<Map<String, Object>> fetchPropertyData() {
       }
                     
            } catch (ParseException e) {
-            e.printStackTrace();
+Dialog.show("Erreur", "erreur check your connection", "Ok", null);           
+// e.printStackTrace();
         }
 
         return (java.util.List<Map<String, Object>>)response.get("annonce");
     } catch(Exception err) {
         //System.out.println("cuase "+err.getMessage());
-        Log.e(err);
+        Dialog.show("Erreur", "erreur check your connection", "Ok", null);
+        //Log.e(err);
         return null;
     }
 }
@@ -120,7 +163,8 @@ java.util.List<Map<String, Object>> fetchPropertyData() {
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceObjectInstance) {
         setLayout(new com.codename1.ui.layouts.BorderLayout());
-        setTitle("AnnoncesView");
+        setUIID("AnnoncesForm");
+        setTitle("Annonces View");
         setName("AnnoncesView");
     }// </editor-fold>
 
@@ -128,12 +172,20 @@ java.util.List<Map<String, Object>> fetchPropertyData() {
     
     
     InfiniteContainer list = new InfiniteContainer() {
+        
+        
+       
+
+        
         @Override
         public Component[] fetchComponents(int index, int amount) {
                        // getAnnonces();
 
             java.util.List<Map<String, Object>> data = fetchPropertyData();
                         System.out.println("data "+data.size());
+                        if(data.size()==0){
+                            pageNumber=1;
+                        }
 
              MultiButton[] cmps = new MultiButton[data.size()];
             for(int iter = 0 ; iter < cmps.length ; iter++) {
@@ -143,26 +195,48 @@ java.util.List<Map<String, Object>> fetchPropertyData() {
                 }
                 
                 String thumb_url = "http://localhost/covoituragetn/"+(String)currentListing.get("photo_profil");
-                String guid = (String)currentListing.get("lieu_arrive");
-                String summary = (String)currentListing.get("lieu_depart");
-                cmps[iter] = new MultiButton(summary);
-                cmps[iter].setIcon(URLImage.createToStorage(placeholder, guid, thumb_url));
-                                    Annonce a = annonces.get(iter);
+                String lieuArriver = (String)currentListing.get("lieu_arrive");
+                String username =(String)currentListing.get("username");
+                System.out.println("username"+username);
+                String lieuDepart = (String)currentListing.get("lieu_depart");
+                cmps[iter] = new MultiButton(username);
+                cmps[iter].setTextLine2(lieuDepart+"->"+lieuArriver);
+                cmps[iter].setTextLine3((String)currentListing.get("trip_date"));
+                cmps[iter].setIcon(URLImage.createToStorage(placeholder,username, thumb_url));
+                
 
                 cmps[iter].addActionListener(new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent evt) {
-              showSingleAnnonce(a);
+              showSingleAnnonce(currentListing.get("id_annonce").toString());
               
-              System.out.println("test "+a.getLieuDepart());
+              //System.out.println("test "+a.getLieuDepart());
           }
       });
             }
+            
          /*   for(Annonce a : annonces) {
     createAnnonceContainer(a);
 }*/
             return cmps;
         }
+
     };
+    
+          protected void setBackCommand(Form f) {
+        Command back = new Command("") {
+
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                CovoiturageTN.home.showBack();
+            }
+
+        };
+        Image img = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, UIManager.getInstance().getComponentStyle("TitleCommand"));
+        back.setIcon(img);
+        f.getToolbar().addCommandToLeftBar(back);
+        f.getToolbar().setTitleCentered(true);
+        f.setBackCommand(back);
+    }
     
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component type="Form" layout="BoxLayout" boxLayoutAxis="Y"  title="Ajouter Annonce" uiid="AjouterAnnonceForm" name="AjouterAnnonce">
+  <component type="Container" layout="FlowLayout" flowLayoutFillRows="false" flowLayoutAlign="1" flowLayoutValign="0"  uiid="FromContainer" name="Container_FromTo">
+    <component type="Container" layout="BorderLayout" borderLayoutAbsoluteCenter="false"  name="Container_1">
+      <component type="Label" text="Lieu Depart:" uiid="FromLabel" name="fromLabel">
+        <layoutConstraint value="Center" />
+      </component>
+    </component>
+    <component type="Container" layout="BorderLayout" borderLayoutAbsoluteCenter="false"  name="Container_1_1_1">
+      <component type="Label" text="Lieu d'arriver:" uiid="ToLabel" name="toLabel">
+        <layoutConstraint value="Center" />
+      </component>
+    </component>
+  </component>
+  <component type="Container" layout="FlowLayout" flowLayoutFillRows="false" flowLayoutAlign="1" flowLayoutValign="0"  uiid="MapContainer" name="Container_Map">
+  </component>
+  <component type="Container" layout="FlowLayout" flowLayoutFillRows="false" flowLayoutAlign="1" flowLayoutValign="0"  uiid="FromContainer" name="Container_Info">
+    <component type="Container" layout="BoxLayout" boxLayoutAxis="Y"  name="Container_2">
+      <component type="Container" layout="FlowLayout" flowLayoutFillRows="false" flowLayoutAlign="1" flowLayoutValign="0"  name="Container_4">
+        <component type="Label" text="Distance:" uiid="DistanceLabel" name="Label_4">
+        </component>
+        <component type="Label" text="0 Km" uiid="DistanceLabel" name="DistanceLabel">
+        </component>
+      </component>
+      <component type="Label" text="Nombre de Places:" uiid="DistanceLabel" name="Label_1">
+      </component>
+      <component type="Container" layout="BorderLayout" borderLayoutAbsoluteCenter="false"  name="NbrPlace">
+      </component>
+      <component type="Label" text="Date depart:" uiid="DistanceLabel" name="Label_2">
+      </component>
+      <component type="Container" layout="BorderLayout" borderLayoutAbsoluteCenter="false"  name="TripDateTime">
+      </component>
+    </component>
+    <component type="Container" layout="FlowLayout" flowLayoutFillRows="false" flowLayoutAlign="1" flowLayoutValign="0"  name="Container_3">
+    </component>
+  </component>
+  <component type="Button" text="Ajouter" name="SubmitButton">
+  </component>
+</component>

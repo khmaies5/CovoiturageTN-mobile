@@ -1,41 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<component type="Form" layout="BoxLayout" boxLayoutAxis="Y"  title="SingleAnnonceView" name="SingleAnnonceView">
-  <component type="Container" layout="FlowLayout" flowLayoutFillRows="false" flowLayoutAlign="1" flowLayoutValign="0"  name="FromToLable">
-    <component type="Label" text="Label" gap="1" textPosition="1" name="From">
-    <custom name="maskName" type="java.lang.String" value=""/>
-    </component>
-    <component type="Label" icon="fontImage:e5c8" name="Icon">
-    </component>
-    <component type="Label" text="Label" gap="1" textPosition="1" name="To">
+<component type="Form" layout="BoxLayout" boxLayoutAxis="Y"  title="Annonce View" uiid="AnnonceViewForm" name="SingleAnnonceView">
+  <component type="Container" layout="BorderLayout" borderLayoutAbsoluteCenter="false"  name="MapContainer">
+  </component>
+  <component type="Container" layout="GridLayout" gridLayoutRows="1" gridLayoutColumns="1"  name="Container_1">
+    <component type="Label" text="Annonce Details" uiid="DetailLabel" name="Label_1">
     </component>
   </component>
-  <component type="Container" layout="TableLayout" tableLayoutRows="4" tableLayoutColumns="2"  name="DetailsContainer">
-    <component type="Label" text="Date Depart:" icon="fontImage:e916" name="">
-      <layoutConstraint row="-1" column="-1" height="-1" width="-1" align="-1" valign="-1" spanHorizontal="1" spanVertical="1" />
-    </component>
-    <component type="Label" text="Label" name="Date">
-      <layoutConstraint row="-1" column="-1" height="-1" width="-1" align="-1" valign="-1" spanHorizontal="1" spanVertical="1" />
-    </component>
-    <component type="Label" text="Prix/Personne:" icon="fontImage:e227" name="Prix1">
-      <layoutConstraint row="-1" column="-1" height="-1" width="-1" align="-1" valign="-1" spanHorizontal="1" spanVertical="1" />
-    </component>
-    <component type="Label" text="Label" name="Prix">
-      <layoutConstraint row="-1" column="-1" height="-1" width="-1" align="-1" valign="-1" spanHorizontal="1" spanVertical="1" />
-    </component>
-    <component type="Label" text="Nombre de place:" icon="fontImage:e84e" name="NbrPlace1">
-      <layoutConstraint row="-1" column="-1" height="-1" width="-1" align="-1" valign="-1" spanHorizontal="1" spanVertical="1" />
-    </component>
-    <component type="Label" text="Label" name="NbrPlace">
-      <layoutConstraint row="-1" column="-1" height="-1" width="-1" align="-1" valign="-1" spanHorizontal="1" spanVertical="1" />
-    </component>
-    <component type="Label" text="Distance:" icon="fontImage:e52e" gap="2" textPosition="3" name="Distance1">
-      <layoutConstraint row="-1" column="-1" height="-1" width="-1" align="-1" valign="-1" spanHorizontal="1" spanVertical="1" />
-    </component>
-    <component type="Label" text="Label" textPosition="3" name="Distance">
-      <layoutConstraint row="-1" column="-1" height="-1" width="-1" align="-1" valign="-1" spanHorizontal="1" spanVertical="1" />
+  <component type="Container" layout="BorderLayout" borderLayoutAbsoluteCenter="false"  uiid="AnnonceInfoContainer" name="Container_5">
+  </component>
+  <component type="Container" layout="GridLayout" gridLayoutRows="1" gridLayoutColumns="1"  name="Container_6_1">
+    <component type="Label" uiid="DividerLabel" name="Label_3">
     </component>
   </component>
-  <component type="Container" layout="FlowLayout" flowLayoutFillRows="false" flowLayoutAlign="1" flowLayoutValign="0"  name="MapContainer">
+  <component type="Container" layout="BorderLayout" borderLayoutAbsoluteCenter="false"  uiid="AnnonceInfoContainer" name="Container_6">
+  </component>
+  <component type="Container" layout="GridLayout" gridLayoutRows="1" gridLayoutColumns="1"  name="Container_5_1_1">
+    <component type="Label" uiid="DividerLabel" name="Label_2">
+    </component>
+  </component>
+  <component type="Container" layout="FlowLayout" flowLayoutFillRows="false" flowLayoutAlign="1" flowLayoutValign="0"  uiid="CritContainer" name="Container_9">
+  </component>
+  <component type="Button" text="Navigate" icon="fontImage:e55d" pressedIcon="fontImage:e55d" name="Button_1">
   </component>
 </component>

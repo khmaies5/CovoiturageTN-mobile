@@ -37,6 +37,18 @@ public class Annonce {
     public Annonce(int idAnnonce) {
         this.idAnnonce = idAnnonce;
     }
+
+    public Annonce(Date tripDate, String lieuDepart, String lieuArriver, int nbrPersonne, float prix, String critere, String distance, User creator) {
+        this.tripDate = tripDate;
+        this.lieuDepart = lieuDepart;
+        this.lieuArriver = lieuArriver;
+        this.nbrPersonne = nbrPersonne;
+        this.prix = prix;
+        this.critere = critere;
+        this.distance = distance;
+        this.creator = creator;
+    }
+    
     
 
     public Annonce(int idAnnonce, Date tripDate, Date annonceDate, String lieuDepart, String lieuArriver, String typeAnnonce, int nbrPersonne, float prix, String critere) {

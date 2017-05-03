@@ -15,6 +15,12 @@
   </component>
   <component type="Label" name="priceLabel" cloudDestinationProperty="priceLabel" text="Label1" >
   </component>
-  <component type="Label" name="dateLabel" cloudDestinationProperty="dateLabel" text="Label1" >
+  <component type="Label" name="dateLabel" cloudDestinationProperty="dateLabel" uiid="LogoLabel" tensileDragEnabled="true" tactileTouch="true" snapToGrid="false" text="Label1" >
+  </component>
+  <component type="Calendar" name="Calendar" cloudDestinationProperty="Calendar" >
+  </component>
+  <component type="DateTimeSpinner" name="DateTimeSpinner" cloudDestinationProperty="DateTimeSpinner" >
+  </component>
+  <component type="CheckBox" name="CheckBox" cloudDestinationProperty="CheckBox" text="CheckBox" toggle="true" >
   </component>
 </component>
