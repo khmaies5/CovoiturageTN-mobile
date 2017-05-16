@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component type="Form" name="AnnonceView" cloudDestinationProperty="AnnonceView" layout="BoxLayout" boxLayoutAxis="Y" >
+  <component type="Container" name="AnnonceContainer" cloudDestinationProperty="AnnonceContainer" scrollableY="true" layout="BoxLayout" boxLayoutAxis="Y" >
+    <component type="Container" name="fromToContainer" cloudDestinationProperty="fromToContainer" layout="BoxLayout" boxLayoutAxis="X" >
+      <component type="Label" name="fromLabel" cloudDestinationProperty="fromLabel" text="Label" >
+      </component>
+      <component type="Label" name="Label" cloudDestinationProperty="Label" text="=&gt;" >
+      </component>
+      <component type="Label" name="toLabel" cloudDestinationProperty="toLabel" text="Label1" >
+      </component>
+    </component>
+  </component>
+  <component type="Container" name="mapContainer" cloudDestinationProperty="mapContainer" layout="FlowLayout" flowLayoutFillRows="true" flowLayoutAlign="4" flowLayoutValign="4" >
+  </component>
+  <component type="Label" name="priceLabel" cloudDestinationProperty="priceLabel" text="Label1" >
+  </component>
+  <component type="Label" name="dateLabel" cloudDestinationProperty="dateLabel" uiid="LogoLabel" tensileDragEnabled="true" tactileTouch="true" snapToGrid="false" text="Label1" >
+  </component>
+  <component type="Calendar" name="Calendar" cloudDestinationProperty="Calendar" >
+  </component>
+  <component type="DateTimeSpinner" name="DateTimeSpinner" cloudDestinationProperty="DateTimeSpinner" >
+  </component>
+  <component type="CheckBox" name="CheckBox" cloudDestinationProperty="CheckBox" text="CheckBox" toggle="true" >
+  </component>
+</component>
