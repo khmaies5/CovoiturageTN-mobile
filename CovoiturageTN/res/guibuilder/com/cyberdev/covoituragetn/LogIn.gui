@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component type="Form" layout="BoxLayout" boxLayoutAxis="Y"  title="" uiid="LogInForm" name="LogIn">
+  <component type="Container" layout="BorderLayout" borderLayoutAbsoluteCenter="false"  uiid="LogoContainer" name="Container_2">
+    <component type="Label" uiid="LogoLabel" name="Label_1">
+      <layoutConstraint value="Center" />
+    </component>
+  </component>
+  <component type="Container" layout="BoxLayout" boxLayoutAxis="Y"  uiid="ContainerLogIn" name="Container_1">
+    <component type="TextField" hint="Username" hintIcon="fontImage:e7fd" name="tfUserName">
+    </component>
+    <component type="TextField" hint="Password" hintIcon="fontImage:e897" constraint="65536" name="tfPassword">
+    </component>
+    <component type="Button" text="Log In " uiid="LogInButton" textPosition="1" name="Button_1">
+    </component>
+  </component>
+</component>
