@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component type="Form" name="GUI 1" cloudDestinationProperty="GUI 1" >
+  <component type="TextField" name="cinField" cloudBoundProperty="text" cloudDestinationProperty="cinField" verticalAlignment="0" text="CIN" >
+  </component>
+  <component type="TextField" name="nomField" cloudBoundProperty="text" cloudDestinationProperty="TextField1" text="nom" >
+  </component>
+  <component type="TextField" name="ageField" cloudBoundProperty="text" cloudDestinationProperty="TextField2" text="age" >
+  </component>
+  <component type="Button" name="Button" cloudDestinationProperty="Button" text="Button" >
+  </component>
+</component>
