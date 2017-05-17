@@ -5,6 +5,8 @@
  */
 package com.cyberdev.covoituragetn;
 
+import entity.User;
+import entity.Annonce;
 import com.codename1.components.FloatingActionButton;
 import com.codename1.components.MultiButton;
 import com.codename1.components.ToastBar;

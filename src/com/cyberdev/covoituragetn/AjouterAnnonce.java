@@ -1,5 +1,7 @@
 package com.cyberdev.covoituragetn;
 
+import entity.User;
+import entity.Annonce;
 import com.codename1.components.ToastBar;
 import com.codename1.googlemaps.MapContainer;
 import com.codename1.io.ConnectionRequest;
@@ -278,7 +280,7 @@ public class AjouterAnnonce extends Form {
         try {
             ConnectionRequest r = new ConnectionRequest();
             r.setPost(false);
-            r.setUrl("http://apicov.khstudio.tn/insert.php");
+            r.setUrl("http://localhost/covoituragetn-api/insert.php");
             r.addArgument("id_user", "" + ann.getCreator().getId());
             r.addArgument("trip_date", tripDate);
             r.addArgument("annonce_date", currentTime);

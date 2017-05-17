@@ -5,6 +5,7 @@
  */
 package com.cyberdev.covoituragetn;
 
+import entity.Annonce;
 import com.codename1.components.ToastBar;
 import com.codename1.googlemaps.MapContainer;
 import com.codename1.io.ConnectionRequest;
@@ -13,6 +14,8 @@ import com.codename1.io.Log;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.maps.Coord;
+import com.codename1.messaging.Message;
+import com.codename1.ui.Button;
 import com.codename1.ui.Command;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
@@ -22,6 +25,7 @@ import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
+import com.codename1.ui.Slider;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
@@ -237,6 +241,92 @@ public class SingleAnnonceView extends com.codename1.ui.Form {
         //annonce route
        cnt.calculateAndDisplayAnnonceRoute(ann.getLieuDepart(), ann.getLieuArriver());
         lieuArriver = ann.getLieuArriver();
+          AnnonceCommentaireRate comment = new AnnonceCommentaireRate(ann);
+        this.add(comment);
+       
+        gui_reserver_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+  Form f2 =new Form("Demande",BoxLayout.y());
+           Slider sl=         new Slider();
+            Label l1=new Label("","choisir le nombre de places");
+       // ProfilForm m =  new ProfilForm(theme);
+         Button btn2 = new Button("Demande ");
+               Button mail= new Button("envoyer mail au conducteur");
+               Button back = new Button("back");
+              f2.add(sl);
+            f2.add(l1);
+           f2.add(btn2);
+          f2.add(mail);
+          f2.add(back);  
+          f2.show();
+          
+                     sl.setEditable(true);
+                     sl.setMinValue(1);
+                     sl.setMaxValue(5);
+                   sl.addActionListener(event -> {
+        l1.setText("nombre de palce a reserver  :"+sl.getProgress());});
+                                                 //  m.getF().removeAll();
+
+         
+            l1.setText("hello");
+                     sl.setEditable(true);
+                     sl.setMinValue(1);
+                     sl.setMaxValue(ann.getNbrPersonne());
+                   sl.addActionListener(event -> {
+        l1.setText("nombre de palce a reserver  :"+sl.getProgress());
+       
+        mail.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                Message m = new Message("bonjour monsieur je veux reserver "+sl.getProgress() +"pour votre annonce de covoiturage");
+Display.getInstance().sendMessage(new String[] {LogIn.e.getEmail()}, "demande de covoiturage", m);
+
+
+            }
+        });
+        
+        btn2.addActionListener(new ActionListener() {
+                     @Override
+                     public void actionPerformed(ActionEvent evt) {
+                       
+                         System.out.println("gdgdgd"+LogIn.e.getId()+"&id_conduc="+ann.getCreator().getId()+"&id_ann="+ann.getIdAnnonce()+"&nbrplaces="+sl.getProgress()+"&etat_approbation="+LogIn.e.getId());
+                         
+                         
+                                                  ConnectionRequest con1 = new ConnectionRequest();
+
+                         Annonce ann1 =  new Annonce(1);
+                                          con1.setUrl("http://localhost/script/ajoutDemande.php?id_user="+LogIn.e.getId()+"&id_conduc="+ann.getCreator().getId()+"&id_ann="+ann.getIdAnnonce()+"&nbrplaces="+sl.getProgress()+"&etat_approbation="+LogIn.e.getId());
+
+                          con1.addResponseListener(new ActionListener<NetworkEvent>() {
+                     @Override
+                     public void actionPerformed(NetworkEvent evt) {
+                           String response1 = new String(con1.getResponseData()) ;
+                      if (response1.equals("success")){
+                      Dialog.show("Demande", "Demande envoyée", "ok",null);
+                      CovoiturageTN.home.show();
+                      }
+                         
+                     }
+                 });
+                                         NetworkManager.getInstance().addToQueue(con1);
+
+//                         else {
+//                         
+//                           Dialog.show("Demande", "vous ne pouvez pas faire une demande sur votre propre annonce", "ok",null);
+//                      CovoiturageTN.home.show();
+//                         }
+                     }
+                 });
+        
+        });
+
+            }
+            
+            
+        });
+        
+        
 //        gui_MapContainer.add(cnt);
 
         /* String encoded = getRoutesEncoded(ann.getLieuDepart(), ann.getLieuArriver());
@@ -332,6 +422,7 @@ public class SingleAnnonceView extends com.codename1.ui.Form {
     private com.codename1.ui.Container gui_Container_5_1_1 = new com.codename1.ui.Container(new com.codename1.ui.layouts.GridLayout(1, 1));
     private com.codename1.ui.Label gui_Label_2 = new com.codename1.ui.Label();
     private com.codename1.ui.Container gui_Container_9 = new com.codename1.ui.Container(new com.codename1.ui.layouts.FlowLayout());
+    private com.codename1.ui.Button gui_reserver_btn = new com.codename1.ui.Button();
     private com.codename1.ui.Button gui_Button_1 = new com.codename1.ui.Button();
 
 
@@ -361,6 +452,7 @@ public class SingleAnnonceView extends com.codename1.ui.Form {
         gui_Label_2.setUIID("DividerLabel");
         gui_Label_2.setName("Label_2");
         addComponent(gui_Container_9);
+        addComponent(gui_reserver_btn);
         addComponent(gui_Button_1);
         gui_MapContainer.setName("MapContainer");
         gui_Container_1.setName("Container_1");
@@ -372,6 +464,9 @@ public class SingleAnnonceView extends com.codename1.ui.Form {
         gui_Container_5_1_1.setName("Container_5_1_1");
         gui_Container_9.setUIID("CritContainer");
         gui_Container_9.setName("Container_9");
+        gui_reserver_btn.setText("Reserver");
+        gui_reserver_btn.setName("reserver_btn");
+        com.codename1.ui.FontImage.setMaterialIcon(gui_reserver_btn,'');
         gui_Button_1.setText("Navigate");
         gui_Button_1.setName("Button_1");
         com.codename1.ui.FontImage.setMaterialIcon(gui_Button_1,'');
