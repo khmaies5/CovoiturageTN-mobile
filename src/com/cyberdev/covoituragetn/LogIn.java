@@ -5,6 +5,7 @@
  */
 package com.cyberdev.covoituragetn;
 
+import entity.User;
 import com.codename1.components.ToastBar;
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
