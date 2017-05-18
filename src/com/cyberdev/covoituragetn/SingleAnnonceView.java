@@ -296,7 +296,7 @@ Display.getInstance().sendMessage(new String[] {LogIn.e.getEmail()}, "demande de
                                                   ConnectionRequest con1 = new ConnectionRequest();
 
                          Annonce ann1 =  new Annonce(1);
-                                          con1.setUrl("http://localhost/script/ajoutDemande.php?id_user="+LogIn.e.getId()+"&id_conduc="+ann.getCreator().getId()+"&id_ann="+ann.getIdAnnonce()+"&nbrplaces="+sl.getProgress()+"&etat_approbation="+LogIn.e.getId());
+                                          con1.setUrl("http://localhost/script2/ajoutDemande.php?id_user="+LogIn.e.getId()+"&id_conduc="+ann.getCreator().getId()+"&id_ann="+ann.getIdAnnonce()+"&nbrplaces="+sl.getProgress()+"&etat_approbation="+LogIn.e.getId());
 
                           con1.addResponseListener(new ActionListener<NetworkEvent>() {
                      @Override

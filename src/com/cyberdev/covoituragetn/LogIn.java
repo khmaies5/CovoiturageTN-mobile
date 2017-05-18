@@ -50,6 +50,17 @@ public class LogIn extends com.codename1.ui.Form {
   
 gui_Label_1.setIcon(resourceObjectInstance.getImage("LogoCovTN.png"));
    ConnectionRequest con = new ConnectionRequest();
+   
+   gui_Button_2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                Inscription signup = new Inscription(resourceObjectInstance);
+        
+        Form sign =  signup.getF();
+        sign.show();
+                
+            }
+        });
 
         gui_Button_1.addActionListener(new ActionListener() {
              @Override
@@ -96,6 +107,7 @@ gui_Label_1.setIcon(resourceObjectInstance.getImage("LogoCovTN.png"));
     private com.codename1.ui.TextField gui_tfUserName = new com.codename1.ui.TextField();
     private com.codename1.ui.TextField gui_tfPassword = new com.codename1.ui.TextField();
     private com.codename1.ui.Button gui_Button_1 = new com.codename1.ui.Button();
+    private com.codename1.ui.Button gui_Button_2 = new com.codename1.ui.Button();
 
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
@@ -116,6 +128,7 @@ gui_Label_1.setIcon(resourceObjectInstance.getImage("LogoCovTN.png"));
         gui_Container_1.addComponent(gui_tfUserName);
         gui_Container_1.addComponent(gui_tfPassword);
         gui_Container_1.addComponent(gui_Button_1);
+        gui_Container_1.addComponent(gui_Button_2);
         gui_tfUserName.setHint("Username");
         gui_tfUserName.setName("tfUserName");
         gui_tfUserName.setHintIcon(com.codename1.ui.FontImage.createMaterial('', gui_tfUserName.getUnselectedStyle()));
@@ -127,6 +140,9 @@ gui_Label_1.setIcon(resourceObjectInstance.getImage("LogoCovTN.png"));
         gui_Button_1.setUIID("LogInButton");
         gui_Button_1.setName("Button_1");
         gui_Button_1.setTextPosition(com.codename1.ui.Component.LEFT);
+        gui_Button_2.setText("SignUp");
+        gui_Button_2.setUIID("LogInButton");
+        gui_Button_2.setName("Button_2");
         gui_Container_2.setUIID("LogoContainer");
         gui_Container_2.setName("Container_2");
         gui_Container_1.setUIID("ContainerLogIn");

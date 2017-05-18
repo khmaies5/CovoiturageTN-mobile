@@ -13,5 +13,7 @@
     </component>
     <component type="Button" text="Log In " uiid="LogInButton" textPosition="1" name="Button_1">
     </component>
+    <component type="Button" text="SignUp" uiid="LogInButton" name="Button_2">
+    </component>
   </component>
 </component>

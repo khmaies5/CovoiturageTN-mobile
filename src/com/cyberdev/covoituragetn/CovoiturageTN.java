@@ -166,11 +166,21 @@ public class CovoiturageTN {
         
         if(LogIn.isLoggedIn()){
             System.out.println("loggedin");
-             Form profile = new Form("profile");
-                                                setBackCommand(profile);
-            NavigationCommand profileCommand = new NavigationCommand("Profile");
-        profileCommand.setNextForm(profile);
-        home.getToolbar().addCommandToSideMenu(profileCommand);
+//            ProfilForm pform = new ProfilForm(theme);
+//             Form profile = pform.getF();
+//                                                setBackCommand(profile);
+//            NavigationCommand profileCommand = new NavigationCommand("Profile");
+//        profileCommand.setNextForm(profile);
+//        home.getToolbar().addCommandToSideMenu(profileCommand);
+        ///////////////////////////////
+        ListeTousLesGroupes tsLesGroupes = new ListeTousLesGroupes(theme);
+        
+        Form groupe =  tsLesGroupes.getF();
+                                                setBackCommand(groupe);
+            NavigationCommand groupeCommand = new NavigationCommand("Groupe");
+        groupeCommand.setNextForm(groupe);
+        home.getToolbar().addCommandToSideMenu(groupeCommand);
+        ///////////////////////////////
             
         } else {
                         System.out.println("not loggedin");
@@ -188,7 +198,7 @@ Form login = new LogIn();
 ConnectionRequest con3 = new ConnectionRequest();
        
 
-con3.setUrl("https://simultaneous-hyphen.000webhostapp.com/affiche_demande.php?id_user="+LogIn.e.getId());
+con3.setUrl("http://localhost/script2/affiche_demande.php?id_user="+LogIn.e.getId());
 con3.addResponseListener(new ActionListener<NetworkEvent>() {
 
             @Override
@@ -211,7 +221,7 @@ con3.addResponseListener(new ActionListener<NetworkEvent>() {
         if(h.getCommand()==cmd2){
         
                ConnectionRequest con9 = new ConnectionRequest();
-        con9.setUrl("https://simultaneous-hyphen.000webhostapp.com/afficher_reservation.php?id_user="+LogIn.e.getId());
+        con9.setUrl("http://localhost/script2/afficher_reservation.php?id_user="+LogIn.e.getId());
         con9.addResponseListener(new ActionListener<NetworkEvent>() {
 
             @Override
@@ -234,7 +244,7 @@ con3.addResponseListener(new ActionListener<NetworkEvent>() {
              @Override
              public void actionPerformed(ActionEvent evt) {
 ConnectionRequest con4 = new ConnectionRequest();
-        con4.setUrl("https://simultaneous-hyphen.000webhostapp.com/accepter_demande.php?id_demande="+id);
+        con4.setUrl("http://localhost/script2/accepter_demande.php?id_demande="+id);
         con4.addResponseListener(new ActionListener<NetworkEvent>() {
 
             @Override
@@ -244,7 +254,7 @@ ConnectionRequest con4 = new ConnectionRequest();
                       Dialog.show("Demande", "Demande accepter", "ok",null);
                         ConnectionRequest con14 = new ConnectionRequest();
                                           System.out.println("hi it's :"+id_annonce+" nbr:"+nbreplaces);
-        con14.setUrl("https://simultaneous-hyphen.000webhostapp.com/decrementer_nombre_de_place.php?idannonce="+id_annonce+"&nbplace="+nbreplaces);
+        con14.setUrl("http://localhost/script2/decrementer_nombre_de_place.php?idannonce="+id_annonce+"&nbplace="+nbreplaces);
                 
                 
   NetworkManager.getInstance().addToQueue(con14);
@@ -267,7 +277,7 @@ home = new AnnoncesView(theme);
           ConnectionRequest con10 = new ConnectionRequest();
 
                        System.out.println("hhhhhh"+id);
-                                         con10.setUrl("https://simultaneous-hyphen.000webhostapp.com/ajouter_reservation.php?id_user="+id_user+"&id_annonce="+id_annonce+"&date_reservation=2017-02-01&etat_reservation=tt&montant="+montant+"&type_payement=cheque&nbplace="+nbreplaces);
+                                         con10.setUrl("http://localhost/script2/ajouter_reservation.php?id_user="+id_user+"&id_annonce="+id_annonce+"&date_reservation=2017-02-01&etat_reservation=tt&montant="+montant+"&type_payement=cheque&nbplace="+nbreplaces);
                    con10.addResponseListener(new ActionListener<NetworkEvent>() {
                      @Override
                      public void actionPerformed(NetworkEvent evt) {
@@ -287,7 +297,7 @@ btn5.addActionListener(new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent evt) {
 ConnectionRequest con5 = new ConnectionRequest();
-        con5.setUrl("https://simultaneous-hyphen.000webhostapp.com/refuser_demande.php?id_demande="+id);
+        con5.setUrl("http://localhost/script2/refuser_demande.php?id_demande="+id);
         con5.addResponseListener(new ActionListener<NetworkEvent>() {
 
             @Override
@@ -308,7 +318,7 @@ btn5.addActionListener(new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent evt) {
 ConnectionRequest con5 = new ConnectionRequest();
-        con5.setUrl("https://simultaneous-hyphen.000webhostapp.com/refuser_demande.php?id_demande="+id);
+        con5.setUrl("http://localhost/script2/refuser_demande.php?id_demande="+id);
         con5.addResponseListener(new ActionListener<NetworkEvent>() {
 
             @Override
@@ -499,12 +509,12 @@ ConnectionRequest con5 = new ConnectionRequest();
 
 
   ConnectionRequest con30 = new ConnectionRequest();
-                 con30.setUrl("https://simultaneous-hyphen.000webhostapp.com/annuler_reservation.php?id_reservation="+id_reserv);
+                 con30.setUrl("http://localhost/script2/annuler_reservation.php?id_reservation="+id_reserv);
                   NetworkManager.getInstance().addToQueue(con30);
                    home.removeAll();
 
                   ConnectionRequest con31 = new ConnectionRequest();
-                    con31.setUrl("https://simultaneous-hyphen.000webhostapp.com/augmenter_nombre_de_place.php?idannonce="+id_a+"&nbplace="+nb_placess); 
+                    con31.setUrl("http://localhost/script2/augmenter_nombre_de_place.php?idannonce="+id_a+"&nbplace="+nb_placess); 
                                     
   NetworkManager.getInstance().addToQueue(con31);
     home = new AnnoncesView(theme);
@@ -535,7 +545,7 @@ ConnectionRequest con5 = new ConnectionRequest();
 
                 Display.getInstance().scheduleLocalNotification(n, System.currentTimeMillis() + 10 * 1000, LocalNotification.REPEAT_NONE);
                  ConnectionRequest con15 = new ConnectionRequest();
-                 con15.setUrl("https://simultaneous-hyphen.000webhostapp.com/payement.php?id_reservation="+id_reserv);
+                 con15.setUrl("http://localhost/script2/payement.php?id_reservation="+id_reserv);
                   NetworkManager.getInstance().addToQueue(con15);
                  home.removeAll();
                   home = new AnnoncesView(theme);
@@ -547,11 +557,11 @@ ConnectionRequest con5 = new ConnectionRequest();
 
 
   ConnectionRequest con30 = new ConnectionRequest();
-                 con30.setUrl("https://simultaneous-hyphen.000webhostapp.com/annuler_reservation.php?id_reservation="+id_reserv);
+                 con30.setUrl("http://localhost/script2/annuler_reservation.php?id_reservation="+id_reserv);
                   NetworkManager.getInstance().addToQueue(con30);
                    home.removeAll();
                   ConnectionRequest con31 = new ConnectionRequest();
-                    con31.setUrl("https://simultaneous-hyphen.000webhostapp.com/augmenter_nombre_de_place.php?idannonce="+id_a+"&nbplace="+nb_placess); 
+                    con31.setUrl("http://localhost/script2/augmenter_nombre_de_place.php?idannonce="+id_a+"&nbplace="+nb_placess); 
                                     
   NetworkManager.getInstance().addToQueue(con31);
    //annonceForm gg = new annonceForm(theme);
